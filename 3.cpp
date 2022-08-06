@@ -130,7 +130,16 @@ void List::Insert(int n, const ElementType &a){
 }
 void List::Delete(int n){
 	Llist p = L;
-	int i = 0;
+	int i = 1;
+	while (p->next && i<n){
+		p = p->next;
+		i++;
+	}
+	if (!p->next || i>n){
+		cout << "Invalid Input or Empty list!" << endl;
+	}
+	else
+		p->next = p->next->next;
 }
 
 int main(){
@@ -157,5 +166,12 @@ int main(){
 	cout << "insert again." << endl;
 	list.Insert(2,a[1]);
 	list.Display();
+	cout << "-----------Testing--------------(for delete)" << endl;
+	list.Delete(0);
+	list.Delete(5);
+	cout << "now delete the second node" << endl;
+	list.Delete(2);
+	list.Display();
+
 	return 0;
 }
