@@ -1,0 +1,17 @@
+g remote add origin "ssh address"
+
+// to see success or not
+ssh -T git@github.com
+
+// first pull
+g pull origin main(origin branch name)
+
+fatal: Need to specify how to reconcile divergent branches.
+while the fatal here happened, we can set as below
+	g config --global pull.rebase false
+
+// then some changes has been made
+g add .
+g cma 'info'
+g push -u origin main(first time)
+or (g push) just ok for next time

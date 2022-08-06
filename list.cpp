@@ -139,7 +139,10 @@ void List::Delete(int n){
 		cout << "Invalid Input or Empty list!" << endl;
 	}
 	else
-		p->next = p->next->next;
+		Llist q = p->next;
+		p->next = q->next;
+		// also p->next = p->next->next;
+		delete q;
 }
 
 int main(){
