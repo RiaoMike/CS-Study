@@ -9,3 +9,5 @@
 
 *.java
 *.class
+
+.gitignore
