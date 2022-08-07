@@ -16,6 +16,7 @@ private:
 	Llist L;
 public:
 	List();
+	List(int, bool reverse = false);
 	~List();
 	int isEmptyList();
 	void ClearList();
@@ -33,11 +34,29 @@ List::List(){
 	L -> next = NULL;
 	cout << "list has been created." << endl;
 }
-int List::isEmptyList(){
-	if (L->next == NULL)
-		return 1;
-	else
-		return 0;
+List::List(int n, bool reverse = false){
+	L = new Lnode;
+	L->next = NULL;
+	if (!reverse){
+		Llist p = L;
+		for (int i=0;i<n;++i){
+			Llist new_node = new Lnode;
+			cin >> new_node->element.name >> new_node->element.score;
+			new_node->next = NULL;
+			p->next = new_node;
+			p = new_node;
+			cout << "list has been created." << endl;
+		}
+	}
+	else{
+		for (int i=0;i<n;++i){
+			Llist new_node = new Lnode;
+			cin >> new_node->element.name >> new_node->element.score;
+			new_node->next = L->next;
+			L->next = new_node;
+			cout << "list has been created." << endl;
+		}
+	}
 }
 List::~List(){
 	Llist p;
@@ -47,6 +66,12 @@ List::~List(){
 		delete p;
 	}
 	cout << "list has been destroyed." << endl;
+}
+int List::isEmptyList(){
+	if (L->next == NULL)
+		return 1;
+	else
+		return 0;
 }
 void List::ClearList(){
 	Llist p,q;
