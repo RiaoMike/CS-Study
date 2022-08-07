@@ -16,7 +16,7 @@ private:
 	Llist L;
 public:
 	List();
-	List(int, bool reverse = false);
+	List(int, bool);
 	~List();
 	int isEmptyList();
 	void ClearList();
@@ -34,10 +34,16 @@ List::List(){
 	L -> next = NULL;
 	cout << "list has been created." << endl;
 }
-List::List(int n, bool reverse = false){
+List::List(int n, bool rever = false){
+	if (n<0){
+		cout << "Invalid Input! Default to Empty list." << endl;
+		n = 0;
+	}
 	L = new Lnode;
 	L->next = NULL;
-	if (!reverse){
+	if (n)
+		cout << "Please enter " << n << " element: " << endl;
+	if (!rever){
 		Llist p = L;
 		for (int i=0;i<n;++i){
 			Llist new_node = new Lnode;
@@ -45,8 +51,8 @@ List::List(int n, bool reverse = false){
 			new_node->next = NULL;
 			p->next = new_node;
 			p = new_node;
-			cout << "list has been created." << endl;
 		}
+		cout << "list has been created." << endl;
 	}
 	else{
 		for (int i=0;i<n;++i){
@@ -54,8 +60,8 @@ List::List(int n, bool reverse = false){
 			cin >> new_node->element.name >> new_node->element.score;
 			new_node->next = L->next;
 			L->next = new_node;
-			cout << "list has been created." << endl;
 		}
+		cout << "list has been created." << endl;
 	}
 }
 List::~List(){
@@ -163,11 +169,12 @@ void List::Delete(int n){
 	if (!p->next || i>n){
 		cout << "Invalid Input or Empty list!" << endl;
 	}
-	else
+	else{
 		Llist q = p->next;
 		p->next = q->next;
 		// also p->next = p->next->next;
 		delete q;
+	}
 }
 
 int main(){
@@ -200,6 +207,12 @@ int main(){
 	cout << "now delete the second node" << endl;
 	list.Delete(2);
 	list.Display();
+	cout << "-----------Testing--------------(for contributor function)" << endl;
+	List new_list(-2);
+	List another_list(3);
+	another_list.Display();
+	List reverse_list(2,true);
+	reverse_list.Display();
 
 	return 0;
 }
