@@ -7,7 +7,6 @@
 #Unignore all dirs
 !*/
 
-*.java
 *.class
 
 .gitignore
