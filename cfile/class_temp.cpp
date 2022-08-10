@@ -33,8 +33,50 @@ void test1(){
 	p2.showPerson();
 }
 
+//***************another thing************************
+// the creating time of member function in a class template
+class Person1{
+public:
+	void showPerson1(){
+		cout << "Person1 show." << endl;
+	}
+};
+class Person2{
+public:
+	void showPerson2(){
+		cout << "Person2 show" << endl;
+	}
+};
+
+template<class T>
+class MyPerson{
+public:
+	T obj;
+	
+	void func1(){
+		// compile won't call error. 
+		// ** function in class template create while specify the class **
+		obj.showPerson1();
+	}
+	// void func2(){
+	// 	obj.showPerosn2();
+	// }
+};
+
+void test2(){
+	cout << "everything is ok" << endl;
+
+	MyPerson<Person1> m;
+	// specify the MyPerson class and func2() can't appear
+	m.func1();
+	// m.func2();
+	cout << "everything is also ok" << endl;
+
+}
+
 int main(){
-	test1();
+	// test1();
+	test2();
 
 	return 0;
 }
