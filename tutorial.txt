@@ -15,3 +15,5 @@ g add .
 g cma 'info'
 g push -u origin main(first time)
 or (g push) just ok for next time
+
+g reset --hard HEAD^
