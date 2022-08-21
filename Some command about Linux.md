@@ -318,5 +318,91 @@ hello liumiao, Greetings
 
 
 
-## 12. 
+## 12*. grep
 
+> **globally search for a regular expression and print all lines containing it** 
+
+### 1. grep pattern file(s)
+
+```bash
+[epicr@EPIPHANY sublime]$ cat greptest.txt
+This is a linux file!     Aug
+Hello, My name is Epicr.   Aug
+Today is wonderful   Jun
+And welcome to my cs-study.   Sep
+unix/Linux is interesting!  Aug
+hahahhaha....   May
+[epicr@EPIPHANY sublime]$ grep -n Aug greptest.txt
+1:This is a linux file!     Aug
+2:Hello, My name is Epicr.   Aug
+5:unix/Linux is interesting!  Aug
+```
+
+### 2. pipes
+
+```bash
+[epicr@EPIPHANY CSshell]$ ls -l
+total 24
+-rw-r--r-- 1 epicr epicr  331 Aug 13 17:36 contributing.md
+drwxr-xr-x 2 epicr epicr 4096 Jun 26 11:22 htmlfiles
+-rw-r--r-- 1 epicr epicr  266 Aug 13 17:36 README.md
+-rwxrw-r-- 1 epicr epicr   84 Aug 13 17:36 s.md
+drwxr-xr-x 2 epicr epicr 4096 Jun 26 11:22 txtfiles
+drwxr-xr-x 2 epicr epicr 4096 Jun 16 19:03 zshfiles
+[epicr@EPIPHANY CSshell]$ ls -l | grep -in jun
+3:drwxr-xr-x 2 epicr epicr 4096 Jun 26 11:22 htmlfiles
+6:drwxr-xr-x 2 epicr epicr 4096 Jun 26 11:22 txtfiles
+7:drwxr-xr-x 2 epicr epicr 4096 Jun 16 19:03 zshfiles
+```
+
+****
+
+> Here are some useful options with **grep** command
+
+<table class="table table-bordered">
+<tbody><tr>
+<th style="text-align:center;">Sr.No.</th>
+<th style="text-align:center;">Option &amp; Description</th>
+</tr>
+<tr>
+<td class="ts">1</td>
+<td>
+<p><b>-v</b></p>
+<p>Prints all lines that do not match pattern.</p>
+</td>
+</tr>
+<tr>
+<td class="ts">2</td>
+<td>
+<p><b>-n</b></p>
+<p>Prints the matched line and its line number.</p>
+</td>
+</tr>
+<tr>
+<td class="ts">3</td>
+<td>
+<p><b>-l</b></p>
+<p>Prints only the names of files with matching lines (letter "l")</p>
+</td>
+</tr>
+<tr>
+<td class="ts">4</td>
+<td>
+<p><b>-c</b></p>
+<p>Prints only the count of matching lines.</p>
+</td>
+</tr>
+<tr>
+<td class="ts">5</td>
+<td>
+<p><b>-i</b></p>
+<p>Matches either upper or lowercase.</p>
+</td>
+</tr>
+</tbody></table>
+
+****
+
+
+
+## 13. 
