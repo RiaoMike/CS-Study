@@ -1,14 +1,40 @@
 #include "workerManager.h"
 
 WorkerManager::WorkerManager(){
-    this->m_EmpNum = 0;
-    this->m_EmpArray = NULL;
+    // file initial
+    ifstream ifs;
+    ifs.open(FILENAME, ios::in);
+
+    // file not exists
+    if (!ifs.is_open()){
+        this->m_EmpNum = 0;
+        this->m_EmpArray = NULL;
+        this->m_FileIsEmpty = true;
+        ifs.close();
+        return;
+    }
+    // file exists but has no data
+    char ch;
+    ifs >> ch;
+    if (ifs.eof()){
+        this->m_EmpNum = 0;
+        this->m_EmpArray = NULL;
+        this->m_FileIsEmpty = true;
+        ifs.close();
+        return;
+    }
+    
+    // file exists and has data
+    this->m_EmpNum = this->getEmpNum();
+    this->readFile(ifs);
+    this->m_FileIsEmpty = false;
+    ifs.close();
 }
 
 void WorkerManager::showMenu(){
     cout << "********************************************************" << endl;
     cout << "*************Welcome to WorkerManager System************" << endl;
-    cout << "**************** 0.Quit Manager System ****************" << endl;
+    cout << "**************** 0.Quit Manager System *****************" << endl;
     cout << "**************** 1.Add Worker Information **************" << endl;
     cout << "**************** 2.Display Worker Information **********" << endl;
     cout << "**************** 3.Delete Worker ***********************" << endl;
@@ -88,6 +114,12 @@ void WorkerManager::addEmp(){
 
         // update worker numbers
         this->m_EmpNum = newSize;
+        
+        // save the employee info 
+        this->save();
+
+        // flag that file not empty
+        this->m_FileIsEmpty = false;
 
         // prompt
         cout << "Successfully added " << addNum << " new workers!" << endl;
@@ -99,6 +131,65 @@ void WorkerManager::addEmp(){
     system("clear");
 }
 
-WorkerManager::~WorkerManager(){
+void WorkerManager::save(){
+    ofstream ofs;
+    ofs.open(FILENAME, ios::out);
 
+    Worker ** tmp;
+    for (int i = 0; i < this->m_EmpNum; ++i){
+        tmp = this->m_EmpArray;
+        ofs << tmp[i]->m_Id << " "
+            << tmp[i]->m_Name << " "
+            << tmp[i]->m_DeptId << endl;
+    }
+
+    ofs.close();
+}
+
+int WorkerManager::getEmpNum(){
+    ifstream ifs;
+    ifs.open(FILENAME, ios::in);
+
+    int id;
+    string name;
+    int did;
+
+    int EmpNum = 0;
+    while (ifs >> id && ifs >> name && ifs >> did){
+        EmpNum++;
+    }
+
+    ifs.close();
+    return EmpNum;
+}
+
+void WorkerManager::readFile(ifstream &ifs){
+    Worker **array = new Worker *[this->m_EmpNum];
+    for (int i = 0; i < this->m_EmpNum; ++i){
+        int id;
+        string name;
+        int did;
+        Worker *p = NULL;
+        ifs >> id >> name >> did;
+        switch (did){
+            case 1:
+                p = new Employee(id, name, did);
+                break;
+            case 2:
+                p = new Manager(id, name, did);
+                break;
+            case 3:
+                p = new Boss(id, name, did);
+                break;
+        }
+        array[i] = p;
+    }
+    this->m_EmpArray = array;
+}
+
+WorkerManager::~WorkerManager(){
+    if (this->m_EmpArray != NULL){
+        delete [] this->m_EmpArray;
+        this->m_EmpArray = NULL;
+    }
 }
