@@ -23,12 +23,23 @@ WorkerManager::WorkerManager(){
         ifs.close();
         return;
     }
+    ifs.close();
     
     // file exists and has data
     this->m_EmpNum = this->getEmpNum();
-    this->readFile(ifs);
+    
+    this->initArray();
+
     this->m_FileIsEmpty = false;
-    ifs.close();
+
+    // for testing
+    if (1 == 0){
+        for (int i = 0; i < this->m_EmpNum; ++i){
+            cout << "id: " << this->m_EmpArray[i]->m_Id << " "
+                << "name: " << this->m_EmpArray[i]->m_Name << " "
+                << "dept id: " << this->m_EmpArray[i]->m_DeptId << endl;
+        }
+    }
 }
 
 void WorkerManager::showMenu(){
@@ -127,7 +138,8 @@ void WorkerManager::addEmp(){
     else{
         cout << "Input Error!!!";
     }
-    system("sleep 3");
+    // press EMTER key to continue
+    system("read");
     system("clear");
 }
 
@@ -163,12 +175,16 @@ int WorkerManager::getEmpNum(){
     return EmpNum;
 }
 
-void WorkerManager::readFile(ifstream &ifs){
-    Worker **array = new Worker *[this->m_EmpNum];
+void WorkerManager::initArray(){
+    ifstream ifs;
+    ifs.open(FILENAME, ios::in);
+
+    this->m_EmpArray = new Worker *[this->m_EmpNum];
+    int id;
+    string name;
+    int did;
+
     for (int i = 0; i < this->m_EmpNum; ++i){
-        int id;
-        string name;
-        int did;
         Worker *p = NULL;
         ifs >> id >> name >> did;
         switch (did){
@@ -182,9 +198,22 @@ void WorkerManager::readFile(ifstream &ifs){
                 p = new Boss(id, name, did);
                 break;
         }
-        array[i] = p;
+        this->m_EmpArray[i] = p;
     }
-    this->m_EmpArray = array;
+    ifs.close();
+}
+
+void WorkerManager::showEmp(){
+    if ( this->m_FileIsEmpty ){
+        cout << "File not exists or empty!" << endl;
+    }
+    else{
+        for (int i = 0; i < this->m_EmpNum; ++i){
+            this->m_EmpArray[i]->showInfo();
+        }
+        system("read");
+        system("clear");
+    }
 }
 
 WorkerManager::~WorkerManager(){

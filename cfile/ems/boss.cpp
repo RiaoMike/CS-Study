@@ -9,7 +9,7 @@ Boss::Boss(int id, string name, int dId){
 void Boss::showInfo(){
     cout << "Id: " << this->m_Id
          << "\tName: " << this->m_Name
-         << "\tDept Id: " << this->getDeptName()
+         << "\tDept Name: " << this->getDeptName()
          << "   \tDuty: Manage all affairs about enterprise." << endl;
 }
 

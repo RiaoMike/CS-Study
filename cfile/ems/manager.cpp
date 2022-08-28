@@ -9,7 +9,7 @@ Manager::Manager(int id, string name, int dId){
 void Manager::showInfo(){
     cout << "Id: " << this->m_Id
          << "\tName: " << this->m_Name
-         << "\tDept Id: " << this->getDeptName()
+         << "\tDept Name: " << this->getDeptName()
          << "\tDuty: Complete the tasks that boss gives, and allot tasks to the employees." << endl;
 }
 

@@ -23,7 +23,9 @@ class WorkerManager{
         int getEmpNum();
 
         // read the data of file to m_EmpArray array
-        void readFile(ifstream &);
+        void initArray();
+
+        void showEmp();
         
         ~WorkerManager();
 
