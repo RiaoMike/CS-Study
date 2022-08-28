@@ -211,9 +211,48 @@ void WorkerManager::showEmp(){
         for (int i = 0; i < this->m_EmpNum; ++i){
             this->m_EmpArray[i]->showInfo();
         }
-        system("read");
-        system("clear");
     }
+    system("read");
+    system("clear");
+}
+
+void WorkerManager::delEmp(){
+    if (this->m_FileIsEmpty){
+        cout << "File not exists or empty!" << endl;
+    }
+    else {
+        cout << "Please enter the worker ID you want to delete: " << endl;
+        int id;
+        cin >> id;
+
+        int index = this->isExists(id);
+        if (index != -1){
+            for (int i = index + 1; i < this->m_EmpNum; ++i){
+                this->m_EmpArray[i-1] = this->m_EmpArray[i];
+            }
+            this->m_EmpNum--;
+            this->save();
+            cout << "Delete successfully!" << endl;
+        }
+        else {
+            cout << "ID not Exists!" << endl;
+        }
+    }
+    system("read");
+    system("clear");
+}
+
+// return index if worker exists and return -1 if not
+int WorkerManager::isExists(int id){
+    int index = -1;
+
+    for (int i = 0; i < this->m_EmpNum; ++i){
+       if (this->m_EmpArray[i]->m_Id == id){
+           index = i;
+           break;
+       } 
+    }
+    return index;
 }
 
 WorkerManager::~WorkerManager(){

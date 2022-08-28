@@ -26,6 +26,13 @@ class WorkerManager{
         void initArray();
 
         void showEmp();
+
+        // delete employee
+        void delEmp();
+
+        // check out that employee is exists or not
+        // and return the index
+        int isExists(int);
         
         ~WorkerManager();
 

@@ -1,5 +1,2 @@
-12 rui 2
-21 ji 3
-33 nini 2
-2 hao 2
-90 rui 3
+21 rui 3
+23 yu 1
