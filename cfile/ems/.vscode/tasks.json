@@ -9,7 +9,9 @@
                 "-g",
                 "${fileDirname}/*.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${workspaceFolder}/bin/${fileBasenameNoExtension}",
+                "-I",
+                "${workspaceFolder}/include"
             ],
             "options": {
                 "cwd": "${fileDirname}"

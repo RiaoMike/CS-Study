@@ -5,7 +5,7 @@
 #include "boss.h"
 using namespace std;
 #include <fstream>
-#define FILENAME "empFile.txt"
+#define FILENAME "../build/empFile.txt"
 
 class WorkerManager{
     public:
@@ -33,6 +33,8 @@ class WorkerManager{
         // check out that employee is exists or not
         // and return the index
         int isExists(int);
+
+        void modEmp();
         
         ~WorkerManager();
 

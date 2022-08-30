@@ -11,4 +11,6 @@
 
 .gitignore
 
-empFile.txt
+build/
+
+bin/

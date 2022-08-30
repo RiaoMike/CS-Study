@@ -36,6 +36,7 @@ int main(){
                 wm.delEmp();
                 break;
             case 4:
+                wm.modEmp();
                 break;
             case 5:
                 break;

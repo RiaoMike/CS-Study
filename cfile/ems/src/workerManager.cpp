@@ -37,22 +37,22 @@ WorkerManager::WorkerManager(){
         for (int i = 0; i < this->m_EmpNum; ++i){
             cout << "id: " << this->m_EmpArray[i]->m_Id << " "
                 << "name: " << this->m_EmpArray[i]->m_Name << " "
-                << "dept id: " << this->m_EmpArray[i]->m_DeptId << endl;
+                << "dept name: " << this->m_EmpArray[i]->m_DeptId << endl;
         }
     }
 }
 
 void WorkerManager::showMenu(){
     cout << "********************************************************" << endl;
-    cout << "*************Welcome to WorkerManager System************" << endl;
-    cout << "**************** 0.Quit Manager System *****************" << endl;
-    cout << "**************** 1.Add Worker Information **************" << endl;
-    cout << "**************** 2.Display Worker Information **********" << endl;
-    cout << "**************** 3.Delete Worker ***********************" << endl;
-    cout << "**************** 4.Change Worker Information ***********" << endl;
-    cout << "**************** 5.Search Worker Information ***********" << endl;
-    cout << "**************** 6.Sort by Number **********************" << endl;
-    cout << "**************** 7.Clear all Information ***************" << endl;
+    cout << "***********  Welcome to WorkerManager System  **********" << endl;
+    cout << "***************  0.Quit Manager System  ****************" << endl;
+    cout << "***************  1.Add Worker Information  *************" << endl;
+    cout << "***************  2.Display Worker Information  *********" << endl;
+    cout << "***************  3.Delete Worker  **********************" << endl;
+    cout << "***************  4.Change Worker Information  **********" << endl;
+    cout << "***************  5.Search Worker Information  **********" << endl;
+    cout << "***************  6.Sort by Number  *********************" << endl;
+    cout << "***************  7.Clear all Information  **************" << endl;
     cout << "********************************************************" << endl;
     cout << endl;
 }
@@ -78,14 +78,27 @@ void WorkerManager::addEmp(){
                 newSpace[i] = this->m_EmpArray[i];
             }
         }
+    
+        // delete old array
+        delete [] this->m_EmpArray;
+
+        // pointing to new array
+        this->m_EmpArray = newSpace;
 
         for (int i = 0; i < addNum; ++i){
             int id;
             string name;
             int did;
 
+
             cout << "Please enter the id of the " << i + 1 << "th new worker: " << endl;
             cin >> id;
+            // !!! prevent to add same ID
+            // enter again if id already exists
+            while (isExists(id) != -1){
+                cout << "ID has already exists! Please enter again: " << endl;
+                cin >> id;
+            }
 
             cout << "Please enter the name of the " << i + 1 << "th new worker: " << endl;
             cin >> name;
@@ -115,16 +128,9 @@ void WorkerManager::addEmp(){
                 }
             }
 
-            newSpace[this->m_EmpNum + i] = p;
+            this->m_EmpArray[this->m_EmpNum] = p;
+            this->m_EmpNum++;
         }
-        // delete old array
-        delete [] this->m_EmpArray;
-
-        // pointing to new array
-        this->m_EmpArray = newSpace;
-
-        // update worker numbers
-        this->m_EmpNum = newSize;
         
         // save the employee info 
         this->save();
@@ -253,6 +259,69 @@ int WorkerManager::isExists(int id){
        } 
     }
     return index;
+}
+
+void WorkerManager::modEmp(){
+    if (this->m_FileIsEmpty){
+        cout << "File not exists or empty!" << endl;
+    }
+    else {
+        cout << "Please enter the worker ID that you want to change: " << endl;
+        int id;
+        cin >> id;
+
+        int index = this->isExists(id);
+        if (index != -1){
+            int newId = 0;
+            string newName = "";
+            int newDid = 0;
+
+            cout << "Find the worker whose ID is " << id << ": " << endl;
+            this->m_EmpArray[index]->showInfo();
+            
+            cout << "Please enter the new ID: " << endl;
+            cin >> newId;
+
+            cout << "Please enter the new Name: " << endl;
+            cin >> newName;
+
+            cout << "Please enter the new Dept name: " << endl
+                 << "1. Employee" << endl
+                 << "2. Manager" << endl
+                 << "3. Boss" << endl;
+            cin >> newDid;
+
+            Worker *worker = NULL;
+            switch (newDid){
+                case 1:
+                    worker = new Employee(newId, newName, newDid);
+                    break;
+                case 2:
+                    worker = new Manager(newId, newName, newDid);
+                    break;
+                case 3:
+                    worker = new Boss(newId, newName, newDid);
+                    break;
+                default:
+                    break;
+            }
+            
+            // delete the worker
+            delete this->m_EmpArray[index];
+
+            // add the modified worker
+            this->m_EmpArray[index] = worker;
+
+            this->save();
+            cout << "Successfully modified." << endl;
+        }
+        else {
+            cout << "ID not Exists!" << endl;
+        }
+    }
+
+    system("read");
+    system("clear");
 }
 
 WorkerManager::~WorkerManager(){
