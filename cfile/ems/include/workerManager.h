@@ -35,6 +35,8 @@ class WorkerManager{
         int isExists(int);
 
         void modEmp();
+
+        void findEmp();
         
         ~WorkerManager();
 

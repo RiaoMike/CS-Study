@@ -324,6 +324,61 @@ void WorkerManager::modEmp(){
     system("clear");
 }
 
+void WorkerManager::findEmp(){
+    if (this->m_FileIsEmpty){
+        cout << "File not exists or empty." << endl;
+    }
+    else {
+        cout << "Please enter the way you want to choose: " << endl;
+        cout << "1. Select by ID" << endl;
+        cout << "2. Select by Name" << endl;
+
+        int choice;
+        cin >> choice;
+        // Select by ID
+        if (choice == 1){
+            cout << "Please enter the ID you want to find: " << endl;
+            int id;
+            cin >> id;
+
+            int index = this->isExists(id);
+            // if the ID exists, display it
+            if (index != -1){
+                cout << "Successfully found. And it's info is: " << endl;
+                this->m_EmpArray[index]->showInfo();
+            }
+            else {
+                cout << "ID not Exists." << endl;
+            }
+        }
+        // Select by name
+        else if (choice == 2){
+            cout << "Please enter the name you want to find: " << endl;
+            string name;
+            cin >> name;
+
+            bool flag = false;
+            for (int i = 0; i < this->m_EmpNum; ++i){
+                if (this->m_EmpArray[i]->m_Name == name){
+                    cout << "Successfully found. And it's info is: " << endl;
+                    this->m_EmpArray[i]->showInfo();
+                    // showing that name has been found
+                    flag = true;
+                }
+            }
+            if (flag == false){
+                cout << "Name not Exists." << endl;
+            }
+        }
+        else {
+            cout << "Input Error!!!" << endl;
+        }
+    }
+
+    system("read");
+    system("clear");
+}
+
 WorkerManager::~WorkerManager(){
     if (this->m_EmpArray != NULL){
         delete [] this->m_EmpArray;
