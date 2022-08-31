@@ -37,6 +37,11 @@ class WorkerManager{
         void modEmp();
 
         void findEmp();
+
+        // sort ascent or descent
+        void sortEmp();
+
+        void clearFile();
         
         ~WorkerManager();
 

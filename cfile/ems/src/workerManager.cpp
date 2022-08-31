@@ -77,10 +77,10 @@ void WorkerManager::addEmp(){
             for (int i = 0; i < this->m_EmpNum; ++i){
                 newSpace[i] = this->m_EmpArray[i];
             }
+            // delete old array
+            delete [] this->m_EmpArray;
         }
     
-        // delete old array
-        delete [] this->m_EmpArray;
 
         // pointing to new array
         this->m_EmpArray = newSpace;
@@ -233,12 +233,18 @@ void WorkerManager::delEmp(){
 
         int index = this->isExists(id);
         if (index != -1){
+            delete this->m_EmpArray[index];
             for (int i = index + 1; i < this->m_EmpNum; ++i){
                 this->m_EmpArray[i-1] = this->m_EmpArray[i];
             }
             this->m_EmpNum--;
             this->save();
             cout << "Delete successfully!" << endl;
+            if (this->m_EmpNum == 0){
+                delete [] this->m_EmpArray;
+                this->m_EmpArray = NULL;
+                this->m_FileIsEmpty = true;
+            }
         }
         else {
             cout << "ID not Exists!" << endl;
@@ -379,8 +385,84 @@ void WorkerManager::findEmp(){
     system("clear");
 }
 
+void WorkerManager::sortEmp(){
+    if (this->m_FileIsEmpty){
+        cout << "File not exists or empty." << endl;
+        system("read");
+        system("clear");
+    }    
+    else {
+        cout << "Please enter the way you want to sort: " << endl;
+        cout << "1. Ascent" << endl;
+        cout << "2. Descent" << endl;
+
+        int choice;
+        cin >> choice;
+
+        // Select Sort
+        for (int i = 0; i < this->m_EmpNum - 1; ++i){
+            int minax = i;
+            for (int j = i+1; j < this->m_EmpNum; ++j){
+                if (choice == 1){
+                    if (this->m_EmpArray[j]->m_Id < this->m_EmpArray[minax]->m_Id){
+                        minax = j;
+                    }
+                }
+                else if (choice == 2){
+                    if (this->m_EmpArray[j]->m_Id > this->m_EmpArray[minax]->m_Id){
+                        minax = j;
+                    }
+                }
+                if (i != minax){
+                    Worker *tmp = this->m_EmpArray[i];
+                    this->m_EmpArray[i] = this->m_EmpArray[minax];
+                    this->m_EmpArray[minax] = tmp;
+                }
+            }
+        }
+        this->save();
+
+        cout << "Successfully sorted. And Result after sort is: " << endl;
+        this->showEmp();
+    }
+}
+
+void WorkerManager::clearFile(){
+    cout << "Sure to clear all data?" << endl;
+    cout << "1. Yes" << endl;
+    cout << "2. No" << endl;
+
+    int choice;
+    cin >> choice;
+
+    if (choice == 1){
+        // clear the txt file
+        ofstream ofs;
+        ofs.open(FILENAME, ios::trunc);
+
+        if (this->m_EmpArray != NULL){
+            for (int i = 0; i < this->m_EmpNum; ++i){
+                delete this->m_EmpArray[i];
+            }
+            this->m_EmpNum = 0;
+            delete [] this->m_EmpArray;
+            this->m_EmpArray = NULL;
+            this->m_FileIsEmpty = true;
+        }
+        cout << "Successfully cleared." << endl;
+    }
+    else {
+        cout << "Press ENTER key to return." << endl;
+    }
+    system("read");
+    system("clear");
+}
+
 WorkerManager::~WorkerManager(){
     if (this->m_EmpArray != NULL){
+        for (int i = 0; i < this->m_EmpNum; ++i){
+            delete this->m_EmpArray[i];
+        }
         delete [] this->m_EmpArray;
         this->m_EmpArray = NULL;
     }
