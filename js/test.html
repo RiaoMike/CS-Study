@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>show form</title>
+    <script type="text/javascript"></script>
+</head>
+<body>
+   <form action="login.php" method="GET">
+    <table border="1" cellpadding="10">
+        <tr>
+            <td>
+                please enter user name: 
+            </td>
+            <td>
+                <input value="Jack" type="text" name="username" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                please enter password: 
+            </td>
+            <td>
+                <input value="123" type="password" name="password" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                please enter your disciption: 
+            </td>
+            <td>
+                <textarea name="discription" cols="50" rows="10"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                plesse enter your hobbies: 
+            </td>
+            <td>
+                <label>
+                    <input type="checkbox" name="hobby" value="fishing">
+                    Fishing
+                </label>
+                <label>
+                    <input type="checkbox" name="hobby" value="lol">
+                    LOL
+                </label>
+                <label>
+                    <input type="checkbox" name="hobby" value="glory of king" >
+                    Glory of King
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                please enter your sex: 
+            </td>
+            <td>
+                <input type="radio" name="sex" value="1">
+                Male
+                <input type="radio" name="sex" value="2" >
+                Female
+                <input type="radio" name="sex" value="3" >
+                Secrit
+            </td>
+        </tr>
+        <tr>
+            <td>
+                please enter your adress: 
+            </td>
+            <td>
+                <select name="province">
+                    <option>--Province--</option>
+                    <option value="Hebei">Hebei</option>
+                    <option value="Beijing">Beijing</option>
+                    <option value="Zhejiang">Zhejiang</option>
+                    <option value="Anhui">Anhui</option>
+                </select>
+                <select name="city">
+                    <option>--City--</option>
+                    <option value="Longyou">Longyou</option>
+                    <option value="Jiangshan">Jiangshan</option>
+                    <option value="Quzhou">Quzhou</option>
+                </select>
+                <select name="qu">
+                    <option>--Qu--</option>
+                    <option value="Hecun">Hecun</option>
+                    <option value="Yutou">Yutou</option>
+                    <option value="Hushan">Hushan</option>
+                    <option value="Shimen">Shimen</option>
+                </select>
+                <br/><br/>
+                please enter more information
+                <br/><br/>
+                <textarea rows="10" cols="50" name="adress"></textarea>
+            </td>
+        </tr>
+        <tr align="right">
+            <td colspan="2">
+                <input type="submmit" value="login">
+            </td>
+        </tr>
+    </table>
+   </form>
+   <input id="btn" type="button" value="click me">
+   <script>
+    $("#btn").click(function func(){
+        alert("are you crazy");
+    });
+   </script>
+</body>
+</html>

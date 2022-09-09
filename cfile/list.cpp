@@ -11,6 +11,7 @@ typedef struct Lnode{
 	Lnode * next;
 }Lnode,* Llist;
 
+// wojiaoxujiarui
 class List{
 private:
 	Llist L;
